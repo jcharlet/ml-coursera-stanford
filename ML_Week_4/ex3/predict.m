@@ -22,13 +22,20 @@ p = zeros(size(X, 1), 1);
 %
 
 
+%1st layer
+a1=[ones(m,1), X];
+z2=a1*Theta1';
 
+a2=sigmoid(z2);
 
+%2nd layer
+s2=size(a2,1);
+a2=[ones(m,1),a2];
 
-
-
-
-
+z3=a2*Theta2';
+a3 = sigmoid(z3);
+[x,ix] = max(a3,[],2);
+p=ix;
 % =========================================================================
 
 
