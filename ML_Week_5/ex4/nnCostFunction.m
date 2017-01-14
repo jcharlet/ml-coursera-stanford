@@ -103,6 +103,28 @@ J=J + lambda/(2*m)*(sum(sum(regTheta1.*regTheta1)) + sum(sum(regTheta2.*regTheta
 %               over the training examples if you are implementing it for the 
 %               first time.
 %
+
+for t = 1:m
+  delta3=a3(t,:)-y_matrix(t,:);
+  
+  Theta2_grad=Theta2_grad + delta3'*a2(t,:) ;
+  
+  delta2=delta3*Theta2.*sigmoidGradient(z2(t,:));
+  delta2 = delta2(2:end);
+  
+  Theta1_grad=Theta1_grad + delta2'*a1(t,:) ;
+  
+endfor
+
+Theta2_grad_unreg=Theta2_grad(:,1);
+Theta2_grad_reg=Theta2_grad(:,2:end)+lambda*Theta2(:,2:end);
+
+Theta2_grad=(1/m)*[Theta2_grad_unreg Theta2_grad_reg];
+
+Theta1_grad_unreg=Theta1_grad(:,1);
+Theta1_grad_reg=Theta1_grad(:,2:end)+lambda*Theta1(:,2:end);
+Theta1_grad=(1/m)*[Theta1_grad_unreg Theta1_grad_reg];
+
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
@@ -110,14 +132,6 @@ J=J + lambda/(2*m)*(sum(sum(regTheta1.*regTheta1)) + sum(sum(regTheta2.*regTheta
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
-
-
-
-
-
-
-
-
 
 
 
