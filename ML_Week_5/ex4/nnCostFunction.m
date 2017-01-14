@@ -80,7 +80,7 @@ a3 = sigmoid(z3);
 
 
 %J=1/m*(-y'*log(sigmoid(X*theta))-(1-y)'*log(1-sigmoid(X*theta)))+lambda/(2*m)*regTheta'*regTheta;
-J=-1/m*sum(sum(y_matrix.*log(a3)+(1-y_matrix).*log(1-a3)))
+J=-1/m*sum(sum(y_matrix.*log(a3)+(1-y_matrix).*log(1-a3)));
 
 regTheta1=Theta1(:,2:size(Theta1,2));
 regTheta2=Theta2(:,2:size(Theta2,2));
@@ -109,21 +109,16 @@ for t = 1:m
   
   Theta2_grad=Theta2_grad + delta3'*a2(t,:) ;
   
-  delta2=delta3*Theta2.*sigmoidGradient(z2(t,:));
+  z2t=z2(t,:);
+  
+  z_with_bias_unit=[ones(size(z2t,1),1) z2t];
+  
+  delta2=delta3*Theta2.*sigmoidGradient(z_with_bias_unit);
   delta2 = delta2(2:end);
   
   Theta1_grad=Theta1_grad + delta2'*a1(t,:) ;
   
 endfor
-
-Theta2_grad_unreg=Theta2_grad(:,1);
-Theta2_grad_reg=Theta2_grad(:,2:end)+lambda*Theta2(:,2:end);
-
-Theta2_grad=(1/m)*[Theta2_grad_unreg Theta2_grad_reg];
-
-Theta1_grad_unreg=Theta1_grad(:,1);
-Theta1_grad_reg=Theta1_grad(:,2:end)+lambda*Theta1(:,2:end);
-Theta1_grad=(1/m)*[Theta1_grad_unreg Theta1_grad_reg];
 
 % Part 3: Implement regularization with the cost function and gradients.
 %
@@ -133,13 +128,14 @@ Theta1_grad=(1/m)*[Theta1_grad_unreg Theta1_grad_reg];
 %               and Theta2_grad from Part 2.
 %
 
+Theta2_grad_unreg=Theta2_grad(:,1);
+Theta2_grad_reg=Theta2_grad(:,2:end)+lambda*Theta2(:,2:end);
 
+Theta2_grad=(1/m)*[Theta2_grad_unreg Theta2_grad_reg];
 
-
-
-
-
-
+Theta1_grad_unreg=Theta1_grad(:,1);
+Theta1_grad_reg=Theta1_grad(:,2:end)+lambda*Theta1(:,2:end);
+Theta1_grad=(1/m)*[Theta1_grad_unreg Theta1_grad_reg];
 
 
 
