@@ -42,7 +42,7 @@ grad = zeros(size(theta));
 % grad=
 
 
-unregTheta=0; %WHY ???????
+unregTheta=0; %from forum, WHY ???????
 regTheta=theta(2:size(theta));
 
 J=1/m*(-y'*log(sigmoid(X*theta))-(1-y)'*log(1-sigmoid(X*theta)))+lambda/(2*m)*regTheta'*regTheta;
