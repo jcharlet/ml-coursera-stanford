@@ -80,9 +80,13 @@ a3 = sigmoid(z3);
 
 
 %J=1/m*(-y'*log(sigmoid(X*theta))-(1-y)'*log(1-sigmoid(X*theta)))+lambda/(2*m)*regTheta'*regTheta;
-J=-1/m*sum(sum(y_matrix.*log(a3)+(1-y_matrix).*log(1-a3)));
+J=-1/m*sum(sum(y_matrix.*log(a3)+(1-y_matrix).*log(1-a3)))
+
+regTheta1=Theta1(:,2:size(Theta1,2));
+regTheta2=Theta2(:,2:size(Theta2,2));
 
 
+J=J + lambda/(2*m)*(sum(sum(regTheta1.*regTheta1)) + sum(sum(regTheta2.*regTheta2)));
 
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
