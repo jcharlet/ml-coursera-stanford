@@ -57,13 +57,21 @@ for i = 1:m
 %           % Compute train/cross validation errors using training examples 
 %           % X(1:i, :) and y(1:i), storing the result in 
 %           % error_train(i) and error_val(i)
-  Xi=X(1:i, :);
-  yi=y(1:i);
+  error_traini = zeros(50, 1);
+  error_vali   = zeros(50, 1);
+  for j= 1:50
+    indexes = round(rand(i,1).*(m-1)+1);
+    Xi=X(indexes, :);
+    yi=y(indexes);
+    
+    [theta] = trainLinearReg(Xi, yi, lambda);
+    
+    error_traini(i)=linearRegCostFunction(Xi,yi,theta,0);
+    error_vali(i)=linearRegCostFunction(Xval,yval,theta,0);
+  end
+  error_train(i)=mean(error_traini(i));
+  error_val(i)=mean(error_vali(i));
   
-  [theta] = trainLinearReg(Xi, yi, lambda);
-  
-  error_train(i)=linearRegCostFunction(Xi,yi,theta,0);
-  error_val(i)=linearRegCostFunction(Xval,yval,theta,0);
 end
 
 
