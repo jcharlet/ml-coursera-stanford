@@ -35,14 +35,14 @@ for i = 1:length(values)
     var_predictionError = mean(double(predictions ~= yval));
     
     
-    fprintf("C: %f, sigma:%f => error: %f", values(i), values(j), var_predictionError);
+    # fprintf("C: %f, sigma:%f => error: %f", values(i), values(j), var_predictionError);
     
     if  predictionError==666 || var_predictionError<predictionError
       predictionError=var_predictionError;
       
       C=var_C;
       sigma=var_sigma;
-      fprintf("\n ###### SMALLER ######## \n");
+      # fprintf("\n ###### SMALLER ######## \n");
     endif
   end
 end
