@@ -26,7 +26,15 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
-
+for i=1:K
+  clusterPoints=(idx==i);
+  for j=1:m
+    if clusterPoints(j)==1
+      centroids(i,:)+=X(j,:);
+    endif  
+  end
+  centroids(i,:)=centroids(i,:)./sum(clusterPoints);
+end
 
 
 
